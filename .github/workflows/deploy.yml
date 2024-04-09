@@ -21,34 +21,31 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Build
-        run: npm run build
+      - name: build
+        env:
+          BASE_PATH: ''
+        run: |
+          npm run build
 
       - name: Upload Artifacts
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-pages-artifact@v3
         with:
-          name: build
-          path: build
+          # this should match the `pages` option in your adapter-static options
+          path: 'build'
 
   deploy:
     needs: build_site
     runs-on: ubuntu-latest
-    env:
-      BASE_PATH: ''  # Set the base path to root
+
+    permissions:
+      pages: write
+      id-token: write
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
 
     steps:
-      - name: Download Artifacts
-        uses: actions/download-artifact@v2
-        with:
-          name: build
-          path: build
-
       - name: Deploy
+        id: deployment
         uses: actions/deploy-pages@v4
-        with:
-          token: ${{ secrets.TOKEN }}
-          keep_files: false
-          commit_message: "Deploy Site"
-          publish_dir: ./build
-          target_branch: gh-pages
-          clean: true
