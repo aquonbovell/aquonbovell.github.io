@@ -24,7 +24,7 @@
 			description:
 				'Augment your datasets with our filters and dataset manipulations to ensure your models are trained on the highest quality datasets (coming soon).',
 			source: 'https://github.com/aquonbovell/ai-summarizer',
-			link: 'https://scintillating-duckanoo-11e8d8.netlify.app/'
+			link: 'https://vermillion-kashata-9115cc.netlify.app/'
 		}
 	];
 
